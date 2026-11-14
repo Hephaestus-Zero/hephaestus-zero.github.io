@@ -52,16 +52,16 @@ body {
 .shell {
   max-width: 736px;
   margin: 0 auto;
-  padding: var(--s-32) var(--s-24) var(--s-64);
+  padding: var(--s-24) var(--s-24) var(--s-64);
 }
 
-/* Bare-text navigation: zero boxes, colour/weight shift only */
+/* Bare-text navigation: zero boxes, colour shift only */
 .topbar {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: var(--s-16);
-  margin-bottom: var(--s-48);
+  margin-bottom: var(--s-24);
   flex-wrap: wrap;
 }
 
@@ -87,7 +87,7 @@ body {
 .bare-link {
   color: var(--muted);
   text-decoration: none;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   min-height: 32px;
   display: inline-flex;
   align-items: center;
@@ -107,13 +107,13 @@ button:focus-visible {
 
 /* Masthead */
 .masthead {
-  margin-bottom: var(--s-24);
+  margin-bottom: var(--s-16);
 }
 
 .masthead h1 {
-  margin: 0 0 var(--s-8);
+  margin: 0 0 var(--s-4);
   font-family: var(--font-sans);
-  font-size: 1.75rem;
+  font-size: 1.625rem;
   font-weight: 600;
   letter-spacing: -0.028em;
   line-height: 1.2;
@@ -124,12 +124,12 @@ button:focus-visible {
   margin: 0;
   color: var(--muted);
   font-size: 0.9375rem;
-  max-width: 58ch;
+  max-width: 68ch;
 }
 
 /* Stage 1: Coupled Strange-Attractor (Direct Manipulation) */
 .stage-section {
-  margin-bottom: var(--s-64);
+  margin-bottom: var(--s-32);
 }
 
 .attractor-wrap {
@@ -144,7 +144,7 @@ button:focus-visible {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 920 / 420;
+  aspect-ratio: 1152 / 416;
   background-color: var(--canvas);
   cursor: ew-resize;
 }
@@ -152,7 +152,7 @@ button:focus-visible {
 .stage-axis {
   position: relative;
   height: 12px;
-  margin-top: var(--s-8);
+  margin-top: var(--s-4);
 }
 
 .stage-axis-line {
@@ -183,7 +183,7 @@ button:focus-visible {
   margin-top: var(--s-8);
   flex-wrap: wrap;
   font-family: var(--font-mono);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   font-variant-numeric: tabular-nums;
 }
 
@@ -203,16 +203,16 @@ button:focus-visible {
   font-weight: 500;
 }
 
-/* Section headers */
+/* Section blocks */
 .section-block {
-  margin-bottom: var(--s-64);
-  padding-top: var(--s-32);
+  margin-bottom: var(--s-48);
+  padding-top: var(--s-24);
   border-top: 1px solid var(--hairline);
   scroll-margin-top: var(--s-24);
 }
 
 .section-kicker {
-  margin: 0 0 var(--s-16);
+  margin: 0 0 var(--s-12);
   font-family: var(--font-mono);
   font-size: 0.75rem;
   letter-spacing: 0.04em;
@@ -225,7 +225,7 @@ button:focus-visible {
   display: flex;
   align-items: center;
   gap: var(--s-24);
-  margin-bottom: var(--s-24);
+  margin-bottom: var(--s-16);
   flex-wrap: wrap;
 }
 
@@ -235,14 +235,14 @@ button:focus-visible {
   border: 0;
   border-radius: 0;
   box-shadow: none;
-  padding: var(--s-8) 0;
+  padding: var(--s-4) 0 var(--s-8);
   margin: 0;
   font-family: var(--font-mono);
   font-size: 0.8125rem;
   color: var(--muted);
   cursor: pointer;
   position: relative;
-  min-height: 36px;
+  min-height: 32px;
   display: inline-flex;
   align-items: center;
   transition: color var(--t-fade) var(--ease-sport);
@@ -272,14 +272,14 @@ button:focus-visible {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: var(--s-24);
-  margin-bottom: var(--s-24);
+  gap: var(--s-16);
+  margin-bottom: var(--s-16);
   flex-wrap: wrap;
 }
 
 .hero-number {
   font-family: var(--font-mono);
-  font-size: 3rem;
+  font-size: 2.75rem;
   font-weight: 500;
   line-height: 1;
   letter-spacing: -0.035em;
@@ -300,19 +300,19 @@ button:focus-visible {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: var(--s-16);
-  margin-bottom: var(--s-24);
+  margin-bottom: var(--s-16);
 }
 
 .chrono-bound {
   font-family: var(--font-mono);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
 
 .chrono-track-hit {
   position: relative;
-  height: 40px;
+  height: 32px;
   display: flex;
   align-items: center;
   cursor: ew-resize;
@@ -353,7 +353,7 @@ button:focus-visible {
 /* Tabular telemetry rows */
 .telemetry-ledger {
   border-top: 1px solid var(--hairline);
-  margin-bottom: var(--s-24);
+  margin-bottom: var(--s-16);
 }
 
 .ledger-row {
@@ -361,7 +361,7 @@ button:focus-visible {
   align-items: baseline;
   justify-content: space-between;
   gap: var(--s-16);
-  padding: var(--s-12) 0;
+  padding: var(--s-8) 0;
   border-bottom: 1px solid var(--hairline);
   font-family: var(--font-mono);
   font-size: 0.8125rem;
@@ -396,10 +396,10 @@ button:focus-visible {
   border-radius: 0;
   box-shadow: none;
   width: 100%;
-  padding: var(--s-8) 0;
+  padding: var(--s-4) 0;
   margin: 0;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: var(--s-16);
   font-family: var(--font-mono);
@@ -407,7 +407,7 @@ button:focus-visible {
   color: var(--ink);
   text-align: left;
   cursor: pointer;
-  min-height: 36px;
+  min-height: 32px;
 }
 
 .cmd-code {
@@ -424,6 +424,7 @@ button:focus-visible {
 .cmd-action {
   color: var(--muted);
   flex-shrink: 0;
+  font-size: 0.75rem;
   transition: color var(--t-fade) var(--ease-sport);
 }
 
@@ -503,7 +504,7 @@ button:focus-visible {
   gap: var(--s-16);
   flex-wrap: wrap;
   font-family: var(--font-mono);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   color: var(--muted);
 }
 
@@ -516,14 +517,39 @@ button:focus-visible {
 
 @media (max-width: 600px) {
   .shell {
-    padding: var(--s-24) var(--s-16) var(--s-48);
+    padding: var(--s-16) var(--s-16) var(--s-48);
   }
 
   .topbar {
-    margin-bottom: var(--s-32);
+    gap: var(--s-8);
+    margin-bottom: var(--s-16);
+  }
+
+  .wordmark {
+    font-size: 0.8125rem;
   }
 
   .topnav {
+    gap: var(--s-12);
+  }
+
+  .bare-link {
+    font-size: 0.75rem;
+  }
+
+  .masthead h1 {
+    font-size: 1.375rem;
+  }
+
+  .subtitle {
+    font-size: 0.875rem;
+  }
+
+  #attractor-stage {
+    aspect-ratio: 960 / 400;
+  }
+
+  .choice-row {
     gap: var(--s-16);
   }
 

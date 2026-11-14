@@ -11,11 +11,10 @@
   const CT = Math.cos(THETA);
   const ST = Math.sin(THETA);
 
-  // Fixed world window so scrubbing mu deforms the manifold in stable coordinates
   const X_MIN = -8.35;
   const X_MAX = 8.35;
-  const Y_MIN = -3.72;
-  const Y_MAX = 3.72;
+  const Y_MIN = -3.65;
+  const Y_MAX = 3.65;
 
   const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -114,6 +113,29 @@
     };
   }
 
+  function smooth3Tap(src, tmp, out, w, h) {
+    for (let y = 0; y < h; y++) {
+      const row = y * w;
+      tmp[row] = 0.78 * src[row] + 0.22 * src[row + 1];
+      const end = row + w - 1;
+      for (let i = row + 1; i < end; i++) {
+        tmp[i] = 0.20 * src[i - 1] + 0.60 * src[i] + 0.20 * src[i + 1];
+      }
+      tmp[end] = 0.22 * src[end - 1] + 0.78 * src[end];
+    }
+    let peak = 1e-3;
+    for (let y = 1; y < h - 1; y++) {
+      const row = y * w;
+      for (let x = 0; x < w; x++) {
+        const i = row + x;
+        const v = 0.68 * (0.20 * tmp[i - w] + 0.60 * tmp[i] + 0.20 * tmp[i + w]) + 0.32 * src[i];
+        out[i] = v;
+        if (v > peak) peak = v;
+      }
+    }
+    return peak;
+  }
+
   function initAttractorStage() {
     const canvas = document.getElementById("attractor-stage");
     if (!canvas) return;
@@ -129,7 +151,7 @@
     const W = canvas.width;
     const H = canvas.height;
     const N_PIXELS = W * H;
-    const N_ORBITS = 2048;
+    const N_ORBITS = 3072;
 
     const colorLUT = buildColorLUT();
     const imgData = ctx.createImageData(W, H);
@@ -137,6 +159,10 @@
 
     const d1 = new Float32Array(N_PIXELS);
     const d2 = new Float32Array(N_PIXELS);
+    const tmpBuf = new Float32Array(N_PIXELS);
+    const s1 = new Float32Array(N_PIXELS);
+    const s2 = new Float32Array(N_PIXELS);
+
     const ox1 = new Float32Array(N_ORBITS);
     const oy1 = new Float32Array(N_ORBITS);
     const ox2 = new Float32Array(N_ORBITS);
@@ -146,8 +172,6 @@
     let frameBudget = 0;
     let rafId = 0;
     let isDragging = false;
-    let peak1 = 1.0;
-    let peak2 = 1.0;
 
     function seedOrbits(currentMu) {
       let state = 0x10804208 >>> 0;
@@ -167,7 +191,7 @@
         oy2[i] = ry + (rand() - 0.5) * 0.14;
       }
 
-      for (let s = 0; s < 28; s++) {
+      for (let s = 0; s < 32; s++) {
         for (let i = 0; i < N_ORBITS; i++) {
           const x1 = ox1[i], y1 = oy1[i], x2 = ox2[i], y2 = oy2[i];
           ox1[i] = D1 * Math.sin(A1 * x1) - Math.sin(B1 * y1) + currentMu * Math.sin(y2 - y1);
@@ -197,7 +221,7 @@
           const v1 = nx1 * ST + ny1 * CT;
           const fx1 = (u1 - X_MIN) * scaleX;
           const fy1 = (Y_MAX - v1) * scaleY;
-          if (fx1 >= 0.0 && fx1 < wLimit && fy1 >= 0.0 && fy1 < hLimit) {
+          if (fx1 >= 1.0 && fx1 < wLimit && fy1 >= 1.0 && fy1 < hLimit) {
             const ix = fx1 | 0;
             const iy = fy1 | 0;
             const dx = fx1 - ix;
@@ -205,19 +229,17 @@
             const idx = iy * W + ix;
             const w0 = 1.0 - dx;
             const h0 = 1.0 - dy;
-            const v00 = d1[idx] + w0 * h0;
-            d1[idx] = v00;
+            d1[idx] += w0 * h0;
             d1[idx + 1] += dx * h0;
             d1[idx + W] += w0 * dy;
             d1[idx + W + 1] += dx * dy;
-            if (v00 > peak1) peak1 = v00;
           }
 
           const u2 = nx2 * CT - ny2 * ST;
           const v2 = nx2 * ST + ny2 * CT;
           const fx2 = (u2 - X_MIN) * scaleX;
           const fy2 = (Y_MAX - v2) * scaleY;
-          if (fx2 >= 0.0 && fx2 < wLimit && fy2 >= 0.0 && fy2 < hLimit) {
+          if (fx2 >= 1.0 && fx2 < wLimit && fy2 >= 1.0 && fy2 < hLimit) {
             const ix = fx2 | 0;
             const iy = fy2 | 0;
             const dx = fx2 - ix;
@@ -225,28 +247,28 @@
             const idx = iy * W + ix;
             const w0 = 1.0 - dx;
             const h0 = 1.0 - dy;
-            const v00 = d2[idx] + w0 * h0;
-            d2[idx] = v00;
+            d2[idx] += w0 * h0;
             d2[idx + 1] += dx * h0;
             d2[idx + W] += w0 * dy;
             d2[idx + W + 1] += dx * dy;
-            if (v00 > peak2) peak2 = v00;
           }
         }
       }
     }
 
     function paintBuffer() {
-      const k1 = 1.0 / (0.018 * peak1 + 1e-5);
-      const k2 = 1.0 / (0.018 * peak2 + 1e-5);
-      const norm1 = 255.0 / Math.log1p(0.52 * peak1 * k1 + 1.0);
-      const norm2 = 255.0 / Math.log1p(0.52 * peak2 * k2 + 1.0);
+      const p1 = smooth3Tap(d1, tmpBuf, s1, W, H);
+      const p2 = smooth3Tap(d2, tmpBuf, s2, W, H);
+      const k1 = 1.0 / (0.015 * p1 + 1e-5);
+      const k2 = 1.0 / (0.015 * p2 + 1e-5);
+      const norm1 = 255.0 / Math.log1p(0.46 * p1 * k1 + 1.0);
+      const norm2 = 255.0 / Math.log1p(0.46 * p2 * k2 + 1.0);
       const bgPixel = colorLUT[0];
 
       for (let idx = 0; idx < N_PIXELS; idx++) {
-        const a = d1[idx];
-        const b = d2[idx];
-        if (a <= 0.001 && b <= 0.001) {
+        const a = s1[idx];
+        const b = s2[idx];
+        if (a <= 0.0005 && b <= 0.0005) {
           pixels32[idx] = bgPixel;
           continue;
         }
@@ -276,8 +298,8 @@
     function resetBuffers(currentMu) {
       d1.fill(0.0);
       d2.fill(0.0);
-      peak1 = 1e-3;
-      peak2 = 1e-3;
+      s1.fill(0.0);
+      s2.fill(0.0);
       seedOrbits(currentMu);
     }
 
@@ -287,7 +309,7 @@
         rafId = 0;
       }
       resetBuffers(mu);
-      splatBatch(190, mu);
+      splatBatch(320, mu);
       paintBuffer();
       updateTelemetry(mu);
     }
@@ -295,7 +317,7 @@
     function tickProgressive() {
       rafId = 0;
       if (frameBudget <= 0) return;
-      splatBatch(isDragging ? 26 : 22, mu);
+      splatBatch(isDragging ? 32 : 42, mu);
       paintBuffer();
       frameBudget -= 1;
       if (frameBudget > 0) {
@@ -303,7 +325,7 @@
       }
     }
 
-    function triggerRender() {
+    function triggerRender(initial) {
       updateTelemetry(mu);
       if (reducedMotionQuery.matches) {
         if (hintEl) hintEl.textContent = "scrub stage or press arrow keys · static equilibrium";
@@ -311,9 +333,9 @@
         return;
       }
       resetBuffers(mu);
-      splatBatch(34, mu);
+      splatBatch(initial ? 140 : 44, mu);
       paintBuffer();
-      frameBudget = isDragging ? 4 : 9;
+      frameBudget = isDragging ? 4 : 8;
       if (!rafId) {
         rafId = requestAnimationFrame(tickProgressive);
       }
@@ -326,7 +348,7 @@
       const nextMu = MU_MIN + ratio * (MU_MAX - MU_MIN);
       if (Math.abs(nextMu - mu) < 0.0004) return;
       mu = nextMu;
-      triggerRender();
+      triggerRender(false);
     }
 
     canvas.addEventListener("pointerdown", (ev) => {
@@ -365,19 +387,19 @@
       else if (ev.key === "Home") {
         mu = MU_MIN;
         ev.preventDefault();
-        triggerRender();
+        triggerRender(false);
         return;
       } else if (ev.key === "End") {
         mu = MU_MAX;
         ev.preventDefault();
-        triggerRender();
+        triggerRender(false);
         return;
       } else {
         return;
       }
       ev.preventDefault();
       mu = Math.min(MU_MAX, Math.max(MU_MIN, mu + step));
-      triggerRender();
+      triggerRender(false);
     });
 
     reducedMotionQuery.addEventListener("change", () => {
@@ -386,10 +408,10 @@
           ? "scrub stage or press arrow keys · static equilibrium"
           : "scrub stage horizontally to perturb coupling";
       }
-      triggerRender();
+      triggerRender(true);
     });
 
-    triggerRender();
+    triggerRender(true);
   }
 
   function initContextScrubber() {
@@ -399,21 +421,24 @@
         slicePerTurn: 346.0,
         savingPct: "-96.2%",
         latencyMs: "1.7 ms",
-        target: "src/hshield.c:cmd_sandbox_impl · Landlock ABI v1..v6 (0% CPU)"
+        symbol: "cmd_sandbox_impl",
+        armor: "Landlock 0% CPU"
       },
       python: {
         catPerTurn: 7453.0,
         slicePerTurn: 484.0,
         savingPct: "-93.5%",
         latencyMs: "1.3 ms",
-        target: "src/hveritas/repository/verifier.py:validate_pinned_image_ref"
+        symbol: "validate_pinned_image_ref",
+        armor: "Pickle VM static scan"
       },
       rust: {
         catPerTurn: 9840.0,
         slicePerTurn: 442.0,
         savingPct: "-95.5%",
         latencyMs: "1.5 ms",
-        target: "crates/exec/src/sandbox.rs:enforce_landlock_abi"
+        symbol: "enforce_landlock_abi",
+        armor: "ABI v1..v6 sandbox"
       }
     };
 
@@ -425,8 +450,8 @@
     const savingEl = document.getElementById("scrubber-saving");
     const captionEl = document.getElementById("scrubber-caption");
     const valCat = document.getElementById("val-cat");
+    const lblSlice = document.getElementById("lbl-slice");
     const valSlice = document.getElementById("val-slice");
-    const valTarget = document.getElementById("val-target");
 
     if (!scrubber) return;
 
@@ -453,11 +478,11 @@
 
       if (savingEl) savingEl.textContent = p.savingPct;
       if (captionEl) {
-        captionEl.textContent = `${fmtInt(savedTok)} tokens saved at turn ${turnPad} · ${p.latencyMs} mmap slice`;
+        captionEl.textContent = `${fmtInt(savedTok)} tokens saved at turn ${turnPad} · ${p.latencyMs} mmap · ${p.armor}`;
       }
       if (valCat) valCat.textContent = `${fmtInt(catTok)} tok (${catWinPct}% of 200k window)`;
+      if (lblSlice) lblSlice.textContent = `hslice mmap AST slice (${p.symbol})`;
       if (valSlice) valSlice.textContent = `${fmtInt(sliceTok)} tok (${sliceWinPct}% of 200k window)`;
-      if (valTarget) valTarget.textContent = p.target;
     }
 
     function setTurnFromClientX(clientX) {

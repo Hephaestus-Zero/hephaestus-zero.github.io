@@ -47,14 +47,14 @@
       <section class="stage-section" aria-labelledby="lab-heading">
         <div class="masthead">
           <h1 id="lab-heading">Theory + Zero</h1>
-          <p class="subtitle">Bare-metal Linux systems, persistent provenance memory, and C11 agent tooling running continuously on one machine.</p>
+          <p class="subtitle">Bare-metal Linux systems, persistent memory, and C11 agent tooling on one machine.</p>
         </div>
 
         <div class="attractor-wrap">
           <canvas
             id="attractor-stage"
-            width="920"
-            height="420"
+            width="1152"
+            height="416"
             tabindex="0"
             role="slider"
             aria-label="Coupled strange-attractor coupling parameter mu"
@@ -70,8 +70,8 @@
             <span class="stage-hint" id="stage-hint">scrub stage horizontally to perturb coupling</span>
             <div class="stage-telemetry" aria-live="polite">
               <span>μ <strong id="tel-mu">0.048</strong></span>
-              <span>λ₁ <strong id="tel-lyap">+0.194</strong></span>
-              <span>sync <strong id="tel-sync">0.84</strong></span>
+              <span>λ₁ <strong id="tel-lyap">+1.505</strong></span>
+              <span>sync <strong id="tel-sync">0.26</strong></span>
             </div>
           </div>
         </div>
@@ -88,7 +88,7 @@
 
         <div class="hero-metric-row">
           <div class="hero-number" id="scrubber-saving">-96.2%</div>
-          <div class="hero-caption" id="scrubber-caption">35,133 tokens saved at turn 04 · 1.7 ms mmap slice</div>
+          <div class="hero-caption" id="scrubber-caption">35,133 tokens saved at turn 04 · 1.7 ms mmap · Landlock 0% CPU</div>
         </div>
 
         <div class="chrono-scrubber">
@@ -117,12 +117,8 @@
             <span class="ledger-val-muted" id="val-cat">36,517 tok (18.3% of 200k window)</span>
           </div>
           <div class="ledger-row">
-            <span class="ledger-label">hslice mmap AST slice (-x)</span>
+            <span class="ledger-label" id="lbl-slice">hslice mmap AST slice (cmd_sandbox_impl)</span>
             <span class="ledger-val" id="val-slice">1,384 tok (0.7% of 200k window)</span>
-          </div>
-          <div class="ledger-row">
-            <span class="ledger-label">target span + containment</span>
-            <span class="ledger-val-muted" id="val-target">src/hshield.c:cmd_sandbox_impl · Landlock ABI v1..v6 (0% CPU)</span>
           </div>
         </div>
 
