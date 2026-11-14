@@ -642,7 +642,7 @@
         else r.setAttribute("data-off", "true");
       });
       const cmd = enabled.size === ORDER.length
-        ? "./install.sh --all"
+        ? "brew install Hephaestus-Zero/tap/hephaestus"
         : `./install.sh --only ${ORDER.filter((o) => enabled.has(o)).join(",")}`;
       if (installText) installText.textContent = cmd;
       if (installBtn) installBtn.setAttribute("data-copy", cmd);

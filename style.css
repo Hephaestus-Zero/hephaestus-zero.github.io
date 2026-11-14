@@ -145,7 +145,7 @@ button:focus-visible {
 
 /* Stage 1: Coupled Strange-Attractor (Direct Manipulation) */
 .stage-section {
-  margin-bottom: var(--s-32);
+  margin-bottom: var(--s-24);
 }
 
 .attractor-wrap {
@@ -222,13 +222,13 @@ button:focus-visible {
 /* Section blocks */
 .section-block {
   margin-bottom: var(--s-48);
-  padding-top: var(--s-24);
+  padding-top: var(--s-16);
   border-top: 1px solid var(--hairline);
   scroll-margin-top: var(--s-24);
 }
 
 .section-kicker {
-  margin: 0 0 var(--s-12);
+  margin: 0 0 var(--s-8);
   font-family: var(--font-mono);
   font-size: 0.75rem;
   letter-spacing: 0.04em;
@@ -236,12 +236,12 @@ button:focus-visible {
   color: var(--muted);
 }
 
-/* Stage 2: Interactive Agent Context Scrubber (0 boxed buttons) */
+/* Stage 2: Interactive Spine & Context Scrubber (0 boxed buttons) */
 .choice-row {
   display: flex;
   align-items: center;
   gap: var(--s-24);
-  margin-bottom: var(--s-16);
+  margin-bottom: var(--s-12);
   flex-wrap: wrap;
 }
 
@@ -289,7 +289,7 @@ button:focus-visible {
   align-items: baseline;
   justify-content: space-between;
   gap: var(--s-16);
-  margin-bottom: var(--s-16);
+  margin-bottom: var(--s-12);
   flex-wrap: wrap;
 }
 
@@ -534,7 +534,7 @@ button:focus-visible {
   text-decoration-color: var(--ink);
 }
 
-/* Organ toggles reuse the active-word tick (same accent role, multi-select) */
+/* Multi-select organ toggles use ink geometry tick so accent stays <= 3 across page */
 .organ-word[aria-pressed="true"] {
   color: var(--ink);
   font-weight: 500;
@@ -547,13 +547,13 @@ button:focus-visible {
   bottom: 2px;
   width: 12px;
   height: 2px;
-  background-color: var(--accent);
+  background-color: var(--ink);
 }
 
 /* Audit receipt: bare tabular rows on hairlines, no container */
 .receipt {
   border-top: 1px solid var(--hairline);
-  margin-bottom: var(--s-16);
+  margin-bottom: var(--s-12);
   font-family: var(--font-mono);
   font-size: 0.8125rem;
   font-variant-numeric: tabular-nums;
@@ -565,7 +565,7 @@ button:focus-visible {
   grid-template-columns: 64px 1fr auto;
   gap: var(--s-16);
   align-items: baseline;
-  padding: var(--s-8) 0;
+  padding: var(--s-4) 0;
   border-bottom: 1px solid var(--hairline);
   color: var(--ink);
   transition: color var(--t-fade) var(--ease-sport);
@@ -590,6 +590,11 @@ button:focus-visible {
 
 .receipt-foot {
   padding-top: var(--s-8);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-16);
+  flex-wrap: wrap;
   color: var(--muted);
   font-size: 0.75rem;
 }
