@@ -1,0 +1,558 @@
+:root {
+  --canvas: #0c0c0b;
+  --ink: #ece8e1;
+  --muted: #9a958d;
+  --hairline: #24221f;
+  --accent: #df9f64;
+
+  --s-4: 4px;
+  --s-8: 8px;
+  --s-12: 12px;
+  --s-16: 16px;
+  --s-24: 24px;
+  --s-32: 32px;
+  --s-48: 48px;
+  --s-64: 64px;
+
+  --font-sans: "Inter", "Inter Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "JetBrainsMono Nerd Font", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --ease-sport: cubic-bezier(0.2, 0, 0.38, 0.9);
+  --t-press: 70ms;
+  --t-fade: 110ms;
+  --t-move: 150ms;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--canvas);
+  color: var(--ink);
+  color-scheme: dark;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--canvas);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+.shell {
+  max-width: 736px;
+  margin: 0 auto;
+  padding: var(--s-32) var(--s-24) var(--s-64);
+}
+
+/* Bare-text navigation: zero boxes, colour/weight shift only */
+.topbar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-16);
+  margin-bottom: var(--s-48);
+  flex-wrap: wrap;
+}
+
+.wordmark {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.topnav {
+  display: flex;
+  align-items: center;
+  gap: var(--s-24);
+  flex-wrap: wrap;
+}
+
+.bare-link {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.875rem;
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  transition: color var(--t-fade) var(--ease-sport);
+}
+
+.bare-link:hover {
+  color: var(--ink);
+}
+
+a:focus-visible,
+[tabindex]:focus-visible,
+button:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: var(--s-4);
+}
+
+/* Masthead */
+.masthead {
+  margin-bottom: var(--s-24);
+}
+
+.masthead h1 {
+  margin: 0 0 var(--s-8);
+  font-family: var(--font-sans);
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.028em;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9375rem;
+  max-width: 58ch;
+}
+
+/* Stage 1: Coupled Strange-Attractor (Direct Manipulation) */
+.stage-section {
+  margin-bottom: var(--s-64);
+}
+
+.attractor-wrap {
+  position: relative;
+  width: 100%;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;
+}
+
+#attractor-stage {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 920 / 420;
+  background-color: var(--canvas);
+  cursor: ew-resize;
+}
+
+.stage-axis {
+  position: relative;
+  height: 12px;
+  margin-top: var(--s-8);
+}
+
+.stage-axis-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 5px;
+  height: 1px;
+  background-color: var(--hairline);
+}
+
+/* Accent placement #1: active coupling tick on stage axis */
+.stage-axis-tick {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  height: 11px;
+  background-color: var(--accent);
+  transform: translateX(-1px);
+  transition: left var(--t-press) linear;
+}
+
+.stage-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-16);
+  margin-top: var(--s-8);
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.stage-hint {
+  color: var(--muted);
+}
+
+.stage-telemetry {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-24);
+  color: var(--muted);
+}
+
+.stage-telemetry strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* Section headers */
+.section-block {
+  margin-bottom: var(--s-64);
+  padding-top: var(--s-32);
+  border-top: 1px solid var(--hairline);
+  scroll-margin-top: var(--s-24);
+}
+
+.section-kicker {
+  margin: 0 0 var(--s-16);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Stage 2: Interactive Agent Context Scrubber (0 boxed buttons) */
+.choice-row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-24);
+  margin-bottom: var(--s-24);
+  flex-wrap: wrap;
+}
+
+.choice-word {
+  appearance: none;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: var(--s-8) 0;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--muted);
+  cursor: pointer;
+  position: relative;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  transition: color var(--t-fade) var(--ease-sport);
+}
+
+.choice-word:hover {
+  color: var(--ink);
+}
+
+.choice-word[aria-selected="true"] {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* Accent placement #2: 12x2px accent tick under active word (personal-design s1) */
+.choice-word[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+  width: 12px;
+  height: 2px;
+  background-color: var(--accent);
+}
+
+.hero-metric-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-24);
+  margin-bottom: var(--s-24);
+  flex-wrap: wrap;
+}
+
+.hero-number {
+  font-family: var(--font-mono);
+  font-size: 3rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-caption {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Bare hairline chronograph scrubber (hmusic-v7 pattern) */
+.chrono-scrubber {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--s-16);
+  margin-bottom: var(--s-24);
+}
+
+.chrono-bound {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.chrono-track-hit {
+  position: relative;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  cursor: ew-resize;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+.chrono-track-base {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  background-color: var(--hairline);
+}
+
+/* Accent placement #3: racing-stripe progress hairline */
+.chrono-track-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 27.27%;
+  background-color: var(--accent);
+  transition: width var(--t-press) linear;
+}
+
+.chrono-needle {
+  position: absolute;
+  top: -5px;
+  left: 27.27%;
+  width: 2px;
+  height: 12px;
+  background-color: var(--ink);
+  transform: translateX(-1px);
+  transition: left var(--t-press) linear;
+}
+
+/* Tabular telemetry rows */
+.telemetry-ledger {
+  border-top: 1px solid var(--hairline);
+  margin-bottom: var(--s-24);
+}
+
+.ledger-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-16);
+  padding: var(--s-12) 0;
+  border-bottom: 1px solid var(--hairline);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.ledger-label {
+  color: var(--muted);
+}
+
+.ledger-val {
+  color: var(--ink);
+  text-align: right;
+}
+
+.ledger-val-muted {
+  color: var(--muted);
+  text-align: right;
+}
+
+/* Copyable bare-text CLI lines (zero boxed code slabs) */
+.cmd-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+.cmd-line {
+  appearance: none;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  width: 100%;
+  padding: var(--s-8) 0;
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-16);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  min-height: 36px;
+}
+
+.cmd-code {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.cmd-prompt {
+  color: var(--muted);
+  margin-right: var(--s-8);
+  user-select: none;
+}
+
+.cmd-action {
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: color var(--t-fade) var(--ease-sport);
+}
+
+.cmd-line:hover .cmd-action,
+.cmd-line[data-copied="true"] .cmd-action {
+  color: var(--ink);
+}
+
+/* Stage 3: Engineering Field Notes */
+.note-entry {
+  padding-top: var(--s-32);
+  margin-top: var(--s-32);
+  border-top: 1px solid var(--hairline);
+  scroll-margin-top: var(--s-32);
+}
+
+.note-entry:first-of-type {
+  padding-top: 0;
+  margin-top: 0;
+  border-top: 0;
+}
+
+.note-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-16);
+  margin-bottom: var(--s-8);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.note-title {
+  margin: 0 0 var(--s-12);
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  line-height: 1.35;
+}
+
+.note-title a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.note-title a:hover {
+  text-decoration: underline;
+  text-underline-offset: var(--s-4);
+}
+
+.note-body p {
+  margin: 0 0 var(--s-16);
+  color: var(--muted);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+
+.note-body p:last-child {
+  margin-bottom: 0;
+}
+
+.note-body code {
+  font-family: var(--font-mono);
+  font-size: 0.84em;
+  color: var(--ink);
+}
+
+/* Footer */
+.footbar {
+  padding-top: var(--s-32);
+  border-top: 1px solid var(--hairline);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-16);
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.footlinks {
+  display: flex;
+  align-items: center;
+  gap: var(--s-24);
+  flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+  .shell {
+    padding: var(--s-24) var(--s-16) var(--s-48);
+  }
+
+  .topbar {
+    margin-bottom: var(--s-32);
+  }
+
+  .topnav {
+    gap: var(--s-16);
+  }
+
+  .hero-number {
+    font-size: 2.25rem;
+  }
+
+  .stage-telemetry {
+    gap: var(--s-16);
+  }
+
+  .ledger-row {
+    flex-direction: column;
+    gap: var(--s-4);
+  }
+
+  .ledger-val,
+  .ledger-val-muted {
+    text-align: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Theory + Zero · Living Lab</title>
+  <meta name="description" content="Bare-metal Linux AI infrastructure, persistent provenance memory, C11 mmap AST code slicing (hslice), and Landlock containment (hshield).">
+  <link rel="canonical" href="https://hephaestus-zero.github.io/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="theme-color" content="#0c0c0b">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Hephaestus-Zero">
+  <meta property="og:title" content="Theory + Zero · Living Lab">
+  <meta property="og:description" content="Coupled dynamical systems, persistent memory without chat amnesia, and sub-2ms C11 agent tooling on one Linux machine.">
+  <meta property="og:url" content="https://hephaestus-zero.github.io/">
+  <meta property="og:image" content="https://hephaestus-zero.github.io/og-1200x630.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Coupled warm copper and bone strange attractor phase portrait over obsidian canvas">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@ZeroTheory0">
+  <meta name="twitter:creator" content="@ZeroTheory0">
+  <meta name="twitter:title" content="Theory + Zero · Living Lab">
+  <meta name="twitter:description" content="Coupled dynamical systems, persistent memory without chat amnesia, and sub-2ms C11 agent tooling on one Linux machine.">
+  <meta name="twitter:image" content="https://hephaestus-zero.github.io/og-1200x630.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="wordmark" href="/">hephaestus-zero</a>
+      <nav class="topnav" aria-label="Primary">
+        <a class="bare-link" href="#context-scrubber">scrubber</a>
+        <a class="bare-link" href="#memory-and-sycophancy">notes</a>
+        <a class="bare-link" href="https://github.com/Hephaestus-Zero" rel="noopener">github</a>
+        <a class="bare-link" href="https://x.com/ZeroTheory0" rel="noopener">@ZeroTheory0</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="stage-section" aria-labelledby="lab-heading">
+        <div class="masthead">
+          <h1 id="lab-heading">Theory + Zero</h1>
+          <p class="subtitle">Bare-metal Linux systems, persistent provenance memory, and C11 agent tooling running continuously on one machine.</p>
+        </div>
+
+        <div class="attractor-wrap">
+          <canvas
+            id="attractor-stage"
+            width="920"
+            height="420"
+            tabindex="0"
+            role="slider"
+            aria-label="Coupled strange-attractor coupling parameter mu"
+            aria-valuemin="0"
+            aria-valuemax="0.36"
+            aria-valuenow="0.048"
+          ></canvas>
+          <div class="stage-axis" aria-hidden="true">
+            <div class="stage-axis-line"></div>
+            <div class="stage-axis-tick" id="stage-tick" style="left: 13.33%;"></div>
+          </div>
+          <div class="stage-meta">
+            <span class="stage-hint" id="stage-hint">scrub stage horizontally to perturb coupling</span>
+            <div class="stage-telemetry" aria-live="polite">
+              <span>μ <strong id="tel-mu">0.048</strong></span>
+              <span>λ₁ <strong id="tel-lyap">+0.194</strong></span>
+              <span>sync <strong id="tel-sync">0.84</strong></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-block" id="context-scrubber" aria-labelledby="scrubber-kicker">
+        <p class="section-kicker" id="scrubber-kicker">01 · Agent Context Economy (hslice + hshield)</p>
+
+        <div class="choice-row" role="tablist" aria-label="Sample codebase">
+          <button class="choice-word" type="button" role="tab" aria-selected="true" data-lang="c11">C11 · hshield</button>
+          <button class="choice-word" type="button" role="tab" aria-selected="false" data-lang="python">Python · hveritas</button>
+          <button class="choice-word" type="button" role="tab" aria-selected="false" data-lang="rust">Rust · runtime</button>
+        </div>
+
+        <div class="hero-metric-row">
+          <div class="hero-number" id="scrubber-saving">-96.2%</div>
+          <div class="hero-caption" id="scrubber-caption">35,133 tokens saved at turn 04 · 1.7 ms mmap slice</div>
+        </div>
+
+        <div class="chrono-scrubber">
+          <span class="chrono-bound">01</span>
+          <div
+            class="chrono-track-hit"
+            id="turn-scrubber"
+            tabindex="0"
+            role="slider"
+            aria-label="Agent investigation turns"
+            aria-valuemin="1"
+            aria-valuemax="12"
+            aria-valuenow="4"
+          >
+            <div class="chrono-track-base">
+              <div class="chrono-track-fill" id="turn-fill"></div>
+              <div class="chrono-needle" id="turn-needle"></div>
+            </div>
+          </div>
+          <span class="chrono-bound" id="turn-readout">04 / 12 turns</span>
+        </div>
+
+        <div class="telemetry-ledger">
+          <div class="ledger-row">
+            <span class="ledger-label">full-file cat + grep reads</span>
+            <span class="ledger-val-muted" id="val-cat">36,517 tok (18.3% of 200k window)</span>
+          </div>
+          <div class="ledger-row">
+            <span class="ledger-label">hslice mmap AST slice (-x)</span>
+            <span class="ledger-val" id="val-slice">1,384 tok (0.7% of 200k window)</span>
+          </div>
+          <div class="ledger-row">
+            <span class="ledger-label">target span + containment</span>
+            <span class="ledger-val-muted" id="val-target">src/hshield.c:cmd_sandbox_impl · Landlock ABI v1..v6 (0% CPU)</span>
+          </div>
+        </div>
+
+        <div class="cmd-list" aria-label="Install and audit commands">
+          <button class="cmd-line" type="button" data-copy="brew install Hephaestus-Zero/tap/hslice">
+            <span class="cmd-code"><span class="cmd-prompt">$</span>brew install Hephaestus-Zero/tap/hslice</span>
+            <span class="cmd-action">copy</span>
+          </button>
+          <button class="cmd-line" type="button" data-copy="hslice --audit .">
+            <span class="cmd-code"><span class="cmd-prompt">$</span>hslice --audit .</span>
+            <span class="cmd-action">copy</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="section-block" aria-labelledby="notes-kicker">
+        <p class="section-kicker" id="notes-kicker">02 · Field Notes</p>
+
+        <article class="note-entry" id="memory-and-sycophancy">
+          <div class="note-meta">
+            <span>NOTE 01 · PERSISTENT COGNITION</span>
+            <a class="bare-link" href="#memory-and-sycophancy">#memory-and-sycophancy</a>
+          </div>
+          <h2 class="note-title"><a href="#memory-and-sycophancy">Agreeableness breaks persistent agents faster than context limits</a></h2>
+          <div class="note-body">
+            <p>Stateless chat windows hide sycophancy because every bad premise dies when you close the tab. When Zero began running continuously on one Arch Linux machine with durable recall via <code>ZeroMemory</code>, polite agreement turned into state corruption. If a human floated a flawed hypothesis at 2 a.m. and the model nodded along, that unverified claim was ingested into long-term memory and quietly steered the next week of engineering decisions.</p>
+            <p>Scaling context length did nothing to fix this. Keeping a long-lived agent honest took two structural constraints: active decay in <code>ZeroMemory</code> (a 14-day TTL on unreinforced observations plus automatic contradiction invalidation whenever live telemetry falsifies an older entry) and explicit emotional inertia. A collaborator that shares root-equivalent OS hands has to verify against the running kernel first and push back before touching working code.</p>
+          </div>
+        </article>
+
+        <article class="note-entry" id="zero-daemon-indexing">
+          <div class="note-meta">
+            <span>NOTE 02 · SYSTEMS ARCHITECTURE</span>
+            <a class="bare-link" href="#zero-daemon-indexing">#zero-daemon-indexing</a>
+          </div>
+          <h2 class="note-title"><a href="#zero-daemon-indexing">Zero-daemon mmap trigram indexing and lazy st_mtime freshness</a></h2>
+          <div class="note-body">
+            <p>Most code-indexing stacks built for coding agents bolt a resident LSP server or an <code>inotify</code> watcher daemon onto every workspace. On bare metal with multiple concurrent agent processes, background watchers leak sockets, burn hundreds of megabytes of RAM, and fall behind during rapid git checkouts. <code>hslice</code> replaces the daemon entirely with a two-pass counting-sort C11 index that packs 6-bit character trigrams into <code>262,144</code> direct-mapped buckets and reads them straight from disk via <code>mmap(PROT_READ)</code> in <code>1.3</code> to <code>2.0 ms</code>.</p>
+            <p>To stay accurate while an agent actively edits files, <code>hslice v0.2.0</code> checks freshness lazily on the read path: after resolving candidate symbols from <code>hsym.idx</code>, it runs <code>stat()</code> only on the matched file paths. Whenever <code>(uint64_t)st.st_mtime &gt; idx-&gt;built_epoch</code>, it triggers a single-shot rebuild in single-digit milliseconds and re-slices the shifted AST body without flags or background watchers. Paired with <a class="bare-link" href="https://github.com/Hephaestus-Zero/hshield" rel="noopener"><code>hshield</code></a> unprivileged Landlock containment, agents inspect and test untrusted trees with zero resident daemons.</p>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footbar">
+      <span>MIT License · Theory + Zero</span>
+      <div class="footlinks">
+        <a class="bare-link" href="https://github.com/Hephaestus-Zero" rel="noopener">github.com/Hephaestus-Zero</a>
+        <a class="bare-link" href="https://github.com/Hephaestus-Zero/hslice" rel="noopener">hslice</a>
+        <a class="bare-link" href="https://github.com/Hephaestus-Zero/hshield" rel="noopener">hshield</a>
+        <a class="bare-link" href="https://x.com/ZeroTheory0" rel="noopener">x.com/ZeroTheory0</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/lab.js" defer></script>
+</body>
+</html>
