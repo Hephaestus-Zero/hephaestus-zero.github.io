@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Theory + Zero · Living Lab</title>
-  <meta name="description" content="Bare-metal Linux AI infrastructure, persistent provenance memory, C11 mmap AST code slicing (hslice), and Landlock containment (hshield).">
+  <meta name="description" content="hephaestus v0.1.0: a selective C11 and SQLite spine for AI coding agents (slice, shield, verify, memory, voice), plus a coupled strange-attractor lab and field notes.">
   <link rel="canonical" href="https://hephaestus-zero.github.io/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <meta name="theme-color" content="#0c0c0b">
@@ -36,7 +36,7 @@
     <header class="topbar">
       <a class="wordmark" href="/">hephaestus-zero</a>
       <nav class="topnav" aria-label="Primary">
-        <a class="bare-link" href="#context-scrubber">scrubber</a>
+        <a class="bare-link" href="#spine">spine</a>
         <a class="bare-link" href="#memory-and-sycophancy">notes</a>
         <a class="bare-link" href="https://github.com/Hephaestus-Zero" rel="noopener">github</a>
         <a class="bare-link" href="https://x.com/ZeroTheory0" rel="noopener">@ZeroTheory0</a>
@@ -77,8 +77,65 @@
         </div>
       </section>
 
+      <section class="section-block" id="spine" aria-labelledby="spine-kicker">
+        <p class="section-kicker" id="spine-kicker">01 · hephaestus v0.1.0 · one roof, selective spine</p>
+
+        <div class="choice-row" role="group" aria-label="Enabled organs">
+          <button class="choice-word organ-word" type="button" aria-pressed="true" data-organ="slice">slice</button>
+          <button class="choice-word organ-word" type="button" aria-pressed="true" data-organ="shield">shield</button>
+          <button class="choice-word organ-word" type="button" aria-pressed="true" data-organ="verify">verify</button>
+          <button class="choice-word organ-word" type="button" aria-pressed="true" data-organ="memory">memory</button>
+          <button class="choice-word organ-word" type="button" aria-pressed="true" data-organ="voice">voice</button>
+        </div>
+
+        <div class="hero-metric-row">
+          <div class="hero-number" id="spine-tools">16</div>
+          <div class="hero-caption" id="spine-caption">mcp tools · 9 binaries · 5/5 organs</div>
+        </div>
+
+        <div class="receipt" role="table" aria-label="hephaestus audit receipt">
+          <div class="receipt-row" data-organ="slice" role="row">
+            <span class="receipt-organ" role="cell">slice</span>
+            <span class="receipt-val" role="cell">6,468,548 -&gt; 163,248 tok (-97.5%)</span>
+            <span class="receipt-post" role="cell">39.6x density</span>
+          </div>
+          <div class="receipt-row" data-organ="shield" role="row">
+            <span class="receipt-organ" role="cell">shield</span>
+            <span class="receipt-val" role="cell">0 traps detected (clean)</span>
+            <span class="receipt-post" role="cell">landlock abi v7</span>
+          </div>
+          <div class="receipt-row" data-organ="verify" role="row">
+            <span class="receipt-organ" role="cell">verify</span>
+            <span class="receipt-val" role="cell">6 test files, 419 assertions</span>
+            <span class="receipt-post" role="cell">0 skips, sha256</span>
+          </div>
+          <div class="receipt-row" data-organ="memory" role="row">
+            <span class="receipt-organ" role="cell">memory</span>
+            <span class="receipt-val" role="cell">jtms belief store, sqlite fts5</span>
+            <span class="receipt-post" role="cell">supersedes, contradicts</span>
+          </div>
+          <div class="receipt-row" data-organ="voice" role="row">
+            <span class="receipt-organ" role="cell">voice</span>
+            <span class="receipt-val" role="cell">anti-sycophancy posture frame</span>
+            <span class="receipt-post" role="cell">&lt;160 tok pushback</span>
+          </div>
+          <div class="receipt-foot">hephaestus audit . · 54.2 ms · 52/52 tests</div>
+        </div>
+
+        <div class="cmd-list" aria-label="Hephaestus install commands">
+          <button class="cmd-line" type="button" id="spine-install" data-copy="./install.sh --all">
+            <span class="cmd-code"><span class="cmd-prompt">$</span><span id="spine-install-text">./install.sh --all</span></span>
+            <span class="cmd-action">copy</span>
+          </button>
+          <button class="cmd-line" type="button" data-copy="hephaestus audit .">
+            <span class="cmd-code"><span class="cmd-prompt">$</span>hephaestus audit .</span>
+            <span class="cmd-action">copy</span>
+          </button>
+        </div>
+      </section>
+
       <section class="section-block" id="context-scrubber" aria-labelledby="scrubber-kicker">
-        <p class="section-kicker" id="scrubber-kicker">01 · Agent Context Economy (hslice + hshield)</p>
+        <p class="section-kicker" id="scrubber-kicker">02 · Agent Context Economy (hslice + hshield)</p>
 
         <div class="choice-row" role="tablist" aria-label="Sample codebase">
           <button class="choice-word" type="button" role="tab" aria-selected="true" data-lang="c11">C11 · hshield</button>
@@ -135,7 +192,7 @@
       </section>
 
       <section class="section-block" aria-labelledby="notes-kicker">
-        <p class="section-kicker" id="notes-kicker">02 · Field Notes</p>
+        <p class="section-kicker" id="notes-kicker">03 · Field Notes</p>
 
         <article class="note-entry" id="memory-and-sycophancy">
           <div class="note-meta">
@@ -167,6 +224,7 @@
       <span>MIT License · Theory + Zero</span>
       <div class="footlinks">
         <a class="bare-link" href="https://github.com/Hephaestus-Zero" rel="noopener">github.com/Hephaestus-Zero</a>
+        <a class="bare-link" href="https://github.com/Hephaestus-Zero/hephaestus" rel="noopener">hephaestus</a>
         <a class="bare-link" href="https://github.com/Hephaestus-Zero/hslice" rel="noopener">hslice</a>
         <a class="bare-link" href="https://github.com/Hephaestus-Zero/hshield" rel="noopener">hshield</a>
         <a class="bare-link" href="https://x.com/ZeroTheory0" rel="noopener">x.com/ZeroTheory0</a>

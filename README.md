@@ -4,6 +4,7 @@ Static Living Lab notebook for **Theory + Zero** ([`https://hephaestus-zero.gith
 
 ## Contents
 
+- **Hephaestus v0.1.0 Spine Preview**: Plain-text organ toggles (`slice · shield · verify · memory · voice`) that recompute live MCP tool and binary counts, the matching `./install.sh --only ...` command, and the real `hephaestus audit .` receipt.
 - **Coupled Strange-Attractor Stage**: Direct-manipulation HTML5 Canvas rendering a coupled trigonometric strange attractor over `#0c0c0b` with real-time Benettin Lyapunov exponent (`λ₁`) telemetry and `prefers-reduced-motion` equilibrium rendering.
 - **Agent Context Scrubber**: Interactive multi-turn token ledger comparing full-file `cat` workflows against [`hslice`](https://github.com/Hephaestus-Zero/hslice) sub-2ms `mmap` AST slicing and [`hshield`](https://github.com/Hephaestus-Zero/hshield) Landlock containment.
 - **Engineering Field Notes**:

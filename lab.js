@@ -603,7 +603,69 @@
     });
   }
 
+  function initSpine() {
+    // Real tool/binary map from hephaestus v0.1.0 (mcp/hephaestus_mcp.py, install.sh)
+    const ORGANS = {
+      slice: { tools: 4, bins: 3 },
+      shield: { tools: 2, bins: 2 },
+      verify: { tools: 2, bins: 1 },
+      memory: { tools: 5, bins: 1 },
+      voice: { tools: 3, bins: 1 }
+    };
+    const ORDER = ["slice", "shield", "verify", "memory", "voice"];
+    const words = Array.from(document.querySelectorAll(".organ-word"));
+    const rows = Array.from(document.querySelectorAll(".receipt-row[data-organ]"));
+    const toolsEl = document.getElementById("spine-tools");
+    const captionEl = document.getElementById("spine-caption");
+    const installBtn = document.getElementById("spine-install");
+    const installText = document.getElementById("spine-install-text");
+    if (!words.length || !toolsEl) return;
+
+    const enabled = new Set(ORDER);
+
+    function render() {
+      let tools = 0;
+      let bins = 1; // the hephaestus dispatcher itself
+      ORDER.forEach((o) => {
+        if (enabled.has(o)) {
+          tools += ORGANS[o].tools;
+          bins += ORGANS[o].bins;
+        }
+      });
+      toolsEl.textContent = String(tools);
+      if (captionEl) {
+        captionEl.textContent = `mcp tools · ${bins} binaries · ${enabled.size}/5 organs`;
+      }
+      words.forEach((w) => w.setAttribute("aria-pressed", enabled.has(w.dataset.organ) ? "true" : "false"));
+      rows.forEach((r) => {
+        if (enabled.has(r.dataset.organ)) r.removeAttribute("data-off");
+        else r.setAttribute("data-off", "true");
+      });
+      const cmd = enabled.size === ORDER.length
+        ? "./install.sh --all"
+        : `./install.sh --only ${ORDER.filter((o) => enabled.has(o)).join(",")}`;
+      if (installText) installText.textContent = cmd;
+      if (installBtn) installBtn.setAttribute("data-copy", cmd);
+    }
+
+    words.forEach((w) => {
+      w.addEventListener("click", () => {
+        const o = w.dataset.organ;
+        if (enabled.has(o)) {
+          if (enabled.size === 1) return; // a spine needs at least one organ
+          enabled.delete(o);
+        } else {
+          enabled.add(o);
+        }
+        render();
+      });
+    });
+
+    render();
+  }
+
   initAttractorStage();
+  initSpine();
   initContextScrubber();
   initCopyLines();
 })();
