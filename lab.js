@@ -478,7 +478,7 @@
 
       if (savingEl) savingEl.textContent = p.savingPct;
       if (captionEl) {
-        captionEl.textContent = `${fmtInt(savedTok)} tokens saved at turn ${turnPad} · ${p.latencyMs} mmap · ${p.armor}`;
+        captionEl.textContent = `${fmtInt(savedTok)} tok saved · ${p.latencyMs} mmap · ${p.armor}`;
       }
       if (valCat) valCat.textContent = `${fmtInt(catTok)} tok (${catWinPct}% of 200k window)`;
       if (lblSlice) lblSlice.textContent = `hslice mmap AST slice (${p.symbol})`;

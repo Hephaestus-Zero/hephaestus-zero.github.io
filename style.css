@@ -65,6 +65,22 @@ body {
   flex-wrap: wrap;
 }
 
+.wordmark,
+.stage-meta,
+.section-kicker,
+.choice-word,
+.hero-number,
+.hero-caption,
+.chrono-bound,
+.ledger-row,
+.cmd-line,
+.note-meta,
+.note-body code,
+.footbar {
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+}
+
 .wordmark {
   font-family: var(--font-mono);
   font-size: 0.875rem;
@@ -328,6 +344,18 @@ button:focus-visible {
   background-color: var(--hairline);
 }
 
+.chrono-track-base::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 2px;
+  height: 4px;
+  background-image: linear-gradient(to right, var(--hairline) 1px, transparent 1px);
+  background-size: calc((100% - 1px) / 11) 4px;
+  pointer-events: none;
+}
+
 /* Accent placement #3: racing-stripe progress hairline */
 .chrono-track-fill {
   position: absolute;
@@ -492,6 +520,18 @@ button:focus-visible {
   font-family: var(--font-mono);
   font-size: 0.84em;
   color: var(--ink);
+}
+
+.note-link {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--muted);
+  text-underline-offset: var(--s-4);
+  transition: text-decoration-color var(--t-fade) var(--ease-sport);
+}
+
+.note-link:hover {
+  text-decoration-color: var(--ink);
 }
 
 /* Footer */

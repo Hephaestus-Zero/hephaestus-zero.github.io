@@ -88,7 +88,7 @@
 
         <div class="hero-metric-row">
           <div class="hero-number" id="scrubber-saving">-96.2%</div>
-          <div class="hero-caption" id="scrubber-caption">35,133 tokens saved at turn 04 · 1.7 ms mmap · Landlock 0% CPU</div>
+          <div class="hero-caption" id="scrubber-caption">35,133 tok saved · 1.7 ms mmap · Landlock 0% CPU</div>
         </div>
 
         <div class="chrono-scrubber">
@@ -157,7 +157,7 @@
           <h2 class="note-title"><a href="#zero-daemon-indexing">Zero-daemon mmap trigram indexing and lazy st_mtime freshness</a></h2>
           <div class="note-body">
             <p>Most code-indexing stacks built for coding agents bolt a resident LSP server or an <code>inotify</code> watcher daemon onto every workspace. On bare metal with multiple concurrent agent processes, background watchers leak sockets, burn hundreds of megabytes of RAM, and fall behind during rapid git checkouts. <code>hslice</code> replaces the daemon entirely with a two-pass counting-sort C11 index that packs 6-bit character trigrams into <code>262,144</code> direct-mapped buckets and reads them straight from disk via <code>mmap(PROT_READ)</code> in <code>1.3</code> to <code>2.0 ms</code>.</p>
-            <p>To stay accurate while an agent actively edits files, <code>hslice v0.2.0</code> checks freshness lazily on the read path: after resolving candidate symbols from <code>hsym.idx</code>, it runs <code>stat()</code> only on the matched file paths. Whenever <code>(uint64_t)st.st_mtime &gt; idx-&gt;built_epoch</code>, it triggers a single-shot rebuild in single-digit milliseconds and re-slices the shifted AST body without flags or background watchers. Paired with <a class="bare-link" href="https://github.com/Hephaestus-Zero/hshield" rel="noopener"><code>hshield</code></a> unprivileged Landlock containment, agents inspect and test untrusted trees with zero resident daemons.</p>
+            <p>To stay accurate while an agent actively edits files, <code>hslice v0.2.0</code> checks freshness lazily on the read path: after resolving candidate symbols from <code>hsym.idx</code>, it runs <code>stat()</code> only on the matched file paths. Whenever <code>(uint64_t)st.st_mtime &gt; idx-&gt;built_epoch</code>, it triggers a single-shot rebuild in single-digit milliseconds and re-slices the shifted AST body without flags or background watchers. Paired with <a class="note-link" href="https://github.com/Hephaestus-Zero/hshield" rel="noopener"><code>hshield</code></a> unprivileged Landlock containment, agents inspect and test untrusted trees with zero resident daemons.</p>
           </div>
         </article>
       </section>
